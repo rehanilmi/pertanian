@@ -68,6 +68,17 @@
                             <a href="#" class="btn btn-success btn-sm">Selengkapnya</a>
                         </div>
                     </div>
+                    <div class="row g-0">
+                        <div class="col-md-6">
+                            <img src="{{ asset('images/berita1.jpg') }}" class="img-fluid h-100" style="object-fit:cover;">
+                        </div>
+                        <div class="col-md-6 p-3">
+                            <small class="text-muted">{{ $beritaUtama->created_at->format('d F Y') }}</small>
+                            <h5 class="fw-bold">{{ $beritaUtama->judul }}</h5>
+                            <p class="small">{{ Str::limit(strip_tags($beritaUtama->isi), 200) }}</p>
+                            <a href="#" class="btn btn-success btn-sm">Selengkapnya</a>
+                        </div>
+                    </div>
                 </div>
                 @endif
             </div>
