@@ -4,7 +4,7 @@
 
 @section('content')
 
-<!-- Banner / Slider -->
+<!-- === BANNER / SLIDER === -->
 <div id="bannerSlider" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
@@ -15,6 +15,7 @@
         </div>
     </div>
 </div>
+
 <!-- === LAYANAN DINAS PERTANIAN === -->
 <section class="py-5" style="background-color:#1b5e20;">
     <div class="container text-center text-white">
@@ -46,6 +47,7 @@
         </div>
     </div>
 </section>
+
 <!-- === KABAR TERKINI === -->
 <section class="py-5 bg-light">
     <div class="container">
@@ -55,32 +57,38 @@
             <div class="col-lg-8">
                 <h3 class="text-success fw-bold mb-3">Kabar Terkini Dinas Pertanian</h3>
 
-                @if(isset($beritaUtama))
-                <div class="card border-0 shadow-sm overflow-hidden">
+                @php
+                $beritaDummy = [
+                [
+                'judul' => 'Dinas Pertanian Gelar Penyuluhan Petani di Lubuk Buaya',
+                'isi' => 'Dalam rangka meningkatkan produksi pangan, Dinas Pertanian Kota Padang melaksanakan penyuluhan pertanian di daerah Lubuk Buaya dengan melibatkan lebih dari 200 petani.',
+                'gambar' => 'berita1.jpg',
+                'tanggal' => '28 Oktober 2025'
+                ],
+                [
+                'judul' => 'Program Urban Farming Dorong Kemandirian Pangan Rumah Tangga',
+                'isi' => 'Urban farming menjadi salah satu program unggulan yang terus dikembangkan oleh Dinas Pertanian Kota Padang.',
+                'gambar' => 'berita2.png',
+                'tanggal' => '26 Oktober 2025'
+                ]
+                ];
+                @endphp
+
+                @foreach($beritaDummy as $b)
+                <div class="card border-0 shadow-sm overflow-hidden mb-4">
                     <div class="row g-0">
                         <div class="col-md-6">
-                            <img src="{{ asset('images/berita1.jpg') }}" class="img-fluid h-100" style="object-fit:cover;">
+                            <img src="{{ asset('images/'.$b['gambar']) }}" class="img-fluid h-100" style="object-fit:cover;">
                         </div>
                         <div class="col-md-6 p-3">
-                            <small class="text-muted">{{ $beritaUtama->created_at->format('d F Y') }}</small>
-                            <h5 class="fw-bold">{{ $beritaUtama->judul }}</h5>
-                            <p class="small">{{ Str::limit(strip_tags($beritaUtama->isi), 200) }}</p>
-                            <a href="#" class="btn btn-success btn-sm">Selengkapnya</a>
-                        </div>
-                    </div>
-                    <div class="row g-0">
-                        <div class="col-md-6">
-                            <img src="{{ asset('images/berita1.jpg') }}" class="img-fluid h-100" style="object-fit:cover;">
-                        </div>
-                        <div class="col-md-6 p-3">
-                            <small class="text-muted">{{ $beritaUtama->created_at->format('d F Y') }}</small>
-                            <h5 class="fw-bold">{{ $beritaUtama->judul }}</h5>
-                            <p class="small">{{ Str::limit(strip_tags($beritaUtama->isi), 200) }}</p>
+                            <small class="text-muted">{{ $b['tanggal'] }}</small>
+                            <h5 class="fw-bold">{{ $b['judul'] }}</h5>
+                            <p class="small">{{ Str::limit($b['isi'], 200) }}</p>
                             <a href="#" class="btn btn-success btn-sm">Selengkapnya</a>
                         </div>
                     </div>
                 </div>
-                @endif
+                @endforeach
             </div>
 
             <!-- Kanan: Counter + Arsip -->
@@ -89,22 +97,52 @@
                 <div class="card bg-success text-white mb-3">
                     <div class="card-body">
                         <h6 class="fw-bold mb-3"><i class="bi bi-graph-up"></i> Counter</h6>
-                        <p class="mb-1">Today: <strong>3,376</strong></p>
-                        <p class="mb-1">This Month: <strong>408,895</strong></p>
-                        <p class="mb-1">This Year: <strong>1,560,814</strong></p>
+                        <p class="mb-1">Hari Ini: <strong>3,376</strong></p>
+                        <p class="mb-1">Bulan Ini: <strong>408,895</strong></p>
+                        <p class="mb-1">Tahun Ini: <strong>1,560,814</strong></p>
                     </div>
                 </div>
 
                 <!-- Arsip Berita -->
+                @php
+                $arsipDummy = [
+                [
+                'judul'=>'Peningkatan Produksi Jagung di Kecamatan Kuranji',
+                'tanggal'=>'20 Okt 2025',
+                'gambar'=>'berita1.jpg'
+                ],
+                [
+                'judul'=>'Sosialisasi Pupuk Bersubsidi untuk Petani Muda',
+                'tanggal'=>'15 Okt 2025',
+                'gambar'=>'berita2.png'
+                ],
+                [
+                'judul'=>'Gerakan Tanam Cabai Serentak di 11 Kecamatan Kota Padang',
+                'tanggal'=>'10 Okt 2025',
+                'gambar'=>'berita1.jpg'
+                ],
+                [
+                'judul'=>'Pelatihan Digitalisasi Data LTT untuk Penyuluh Pertanian',
+                'tanggal'=>'5 Okt 2025',
+                'gambar'=>'berita2.png'
+                ],
+                [
+                'judul'=>'Kegiatan Panen Raya di Kecamatan Nanggalo Bersama Petani Binaan',
+                'tanggal'=>'28 Sep 2025',
+                'gambar'=>'berita1.jpg'
+                ],
+                ];
+                @endphp
+
                 <div class="card shadow-sm">
                     <div class="card-header bg-success text-white fw-semibold">Arsip Berita</div>
                     <div class="list-group list-group-flush">
-                        @foreach($arsipBerita as $arsip)
+                        @foreach($arsipDummy as $arsip)
                         <a href="#" class="list-group-item list-group-item-action d-flex">
-                            <img src="{{ asset('images/berita2.png') }}" width="60" height="60" class="me-2 rounded" style="object-fit:cover;">
+                            <img src="{{ asset('images/'.$arsip['gambar']) }}" width="60" height="60" class="me-2 rounded" style="object-fit:cover;">
                             <div>
-                                <small class="text-muted d-block">{{ $arsip->created_at->format('d M Y') }}</small>
-                                <p class="mb-0 small">{{ Str::limit($arsip->judul, 60) }}</p>
+                                <small class="text-muted d-block">{{ $arsip['tanggal'] }}</small>
+                                <p class="mb-0 small">{{ $arsip['judul'] }}</p>
                             </div>
                         </a>
                         @endforeach
@@ -114,47 +152,35 @@
         </div>
     </div>
 </section>
-<!-- Sekilas Data -->
+
+<!-- === SEKILAS DATA === -->
 <section class="py-5 bg-light">
     <div class="container text-center">
         <h2 class="section-title">Sekilas Data Pertanian</h2>
         <div class="row g-4">
+            @php
+            $data = [
+            ['angka'=>'1.230','label'=>'Petani Binaan'],
+            ['angka'=>'3.250 ha','label'=>'Luas Tanam'],
+            ['angka'=>'7.800 ton','label'=>'Produksi'],
+            ['angka'=>'95%','label'=>'Bantuan Tersalurkan'],
+            ];
+            @endphp
+            @foreach($data as $d)
             <div class="col-md-3">
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
-                        <h4 class="fw-bold text-success">1.230</h4>
-                        <p class="mb-0">Petani Binaan</p>
+                        <h4 class="fw-bold text-success">{{ $d['angka'] }}</h4>
+                        <p class="mb-0">{{ $d['label'] }}</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body">
-                        <h4 class="fw-bold text-success">3.250 ha</h4>
-                        <p class="mb-0">Luas Tanam</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body">
-                        <h4 class="fw-bold text-success">7.800 ton</h4>
-                        <p class="mb-0">Produksi</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body">
-                        <h4 class="fw-bold text-success">95%</h4>
-                        <p class="mb-0">Bantuan Tersalurkan</p>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
-<!-- Program Unggulan -->
+
+<!-- === PROGRAM UNGGULAN === -->
 <section class="py-5 bg-light">
     <div class="container">
         <h2 class="section-title text-center">Program Unggulan</h2>
@@ -180,7 +206,8 @@
         </div>
     </div>
 </section>
-<!-- Agenda Kegiatan -->
+
+<!-- === AGENDA === -->
 <section class="py-5 bg-light">
     <div class="container">
         <h2 class="section-title text-center">Agenda Kegiatan</h2>
@@ -196,4 +223,5 @@
         </ul>
     </div>
 </section>
+
 @endsection
