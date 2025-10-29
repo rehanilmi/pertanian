@@ -62,7 +62,7 @@
                 [
                 'judul' => 'Dinas Pertanian Gelar Penyuluhan Petani di Lubuk Buaya',
                 'isi' => 'Dalam rangka meningkatkan produksi pangan, Dinas Pertanian Kota Padang melaksanakan penyuluhan pertanian di daerah Lubuk Buaya dengan melibatkan lebih dari 200 petani.',
-                'gambar' => 'berita1.jpg',
+                'gambar' => 'berita2.png',
                 'tanggal' => '28 Oktober 2025'
                 ],
                 [
@@ -109,7 +109,7 @@
                 [
                 'judul'=>'Peningkatan Produksi Jagung di Kecamatan Kuranji',
                 'tanggal'=>'20 Okt 2025',
-                'gambar'=>'berita1.jpg'
+                'gambar'=>'berita2.png'
                 ],
                 [
                 'judul'=>'Sosialisasi Pupuk Bersubsidi untuk Petani Muda',
@@ -119,7 +119,7 @@
                 [
                 'judul'=>'Gerakan Tanam Cabai Serentak di 11 Kecamatan Kota Padang',
                 'tanggal'=>'10 Okt 2025',
-                'gambar'=>'berita1.jpg'
+                'gambar'=>'berita2.png'
                 ],
                 [
                 'judul'=>'Pelatihan Digitalisasi Data LTT untuk Penyuluh Pertanian',
@@ -129,7 +129,7 @@
                 [
                 'judul'=>'Kegiatan Panen Raya di Kecamatan Nanggalo Bersama Petani Binaan',
                 'tanggal'=>'28 Sep 2025',
-                'gambar'=>'berita1.jpg'
+                'gambar'=>'berita2.png'
                 ],
                 ];
                 @endphp

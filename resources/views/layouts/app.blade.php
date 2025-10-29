@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Dinas Pertanian Kota Padang')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 <body>
 @include('layouts.partials.header')
@@ -124,6 +125,18 @@
     .navbar.scrolled {
         background-color: #155a1a !important;
         box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+    }
+
+    footer {
+        font-size: 14px;
+        background-color: #2e4528 !important;
+    }
+    footer ul li:hover {
+        color: #a8e6a3;
+        cursor: pointer;
+    }
+    footer a:hover {
+        color: #a8e6a3 !important;
     }
 
 
