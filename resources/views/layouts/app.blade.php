@@ -139,6 +139,15 @@
         color: #a8e6a3 !important;
     }
 
+    /* Poster Gallery */
+    section img {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    section img:hover {
+        transform: scale(1.03);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    }
+
 
 </style>
 

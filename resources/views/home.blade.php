@@ -224,4 +224,29 @@
     </div>
 </section>
 
+<!-- === POSTER INFORMASI (Full Image) === -->
+<section class="py-5" style="background-color: #f3f8f3;">
+    <div class="container">
+        <div class="row justify-content-center g-4">
+            @php
+            $posters = [
+            'poster1.jpeg',
+            'poster4.jpeg',
+            'poster1.jpeg',
+            'poster4.jpeg',
+            ];
+            @endphp
+
+            @foreach($posters as $poster)
+            <div class="col-10 col-md-4 col-lg-3">
+                <a href="{{ asset('images/'.$poster) }}" target="_blank" class="d-block shadow-sm rounded overflow-hidden">
+                    <img src="{{ asset('images/'.$poster) }}" class="img-fluid rounded" alt="Poster Informasi" style="object-fit: cover; width: 100%; height: 100%;">
+                </a>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+
 @endsection
