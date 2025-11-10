@@ -1,10 +1,11 @@
 <footer class="text-white pt-5 pb-3" style="background-color: #2e4528;">
     <div class="container">
         <div class="row gy-4">
-            <!-- Kiri: Logo & Tautan Cepat -->
+
+            <!-- Kiri: Logo & Menu -->
             <div class="col-lg-6">
                 <div class="d-flex align-items-center mb-3">
-                    <img src="{{ asset('images/logopertanian.jpeg') }}" alt="Logo" width="55" height="55" class="me-2">
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo" width="55" height="55" class="me-2">
                     <div>
                         <h6 class="fw-bold mb-0 text-uppercase">DINAS PERTANIAN</h6>
                         <small class="text-uppercase">KOTA PADANG</small>
@@ -14,18 +15,19 @@
                 <div class="row">
                     <div class="col-6">
                         <ul class="list-unstyled small">
-                            <li class="mb-2"><i class="bi bi-caret-right-fill me-1"></i> Profil</li>
-                            <li class="mb-2"><i class="bi bi-caret-right-fill me-1"></i> Program</li>
-                            <li class="mb-2"><i class="bi bi-caret-right-fill me-1"></i> Publikasi</li>
-                            <li class="mb-2"><i class="bi bi-caret-right-fill me-1"></i> Data Statistik</li>
+                            <li class="mb-2"><i class="bi bi-caret-right-fill me-1"></i> <a href="#" class="text-white text-decoration-none">Home</a></li>
+                            <li class="mb-2"><i class="bi bi-caret-right-fill me-1"></i> <a href="#" class="text-white text-decoration-none">Profil Dinas</a></li>
+                            <li class="mb-2"><i class="bi bi-caret-right-fill me-1"></i> <a href="#" class="text-white text-decoration-none">Galeri</a></li>
+                            <li class="mb-2"><i class="bi bi-caret-right-fill me-1"></i> <a href="#" class="text-white text-decoration-none">Pengaduan</a></li>
                         </ul>
                     </div>
+
                     <div class="col-6">
                         <ul class="list-unstyled small">
-                            <li class="mb-2"><i class="bi bi-caret-right-fill me-1"></i> Perizinan</li>
-                            <li class="mb-2"><i class="bi bi-caret-right-fill me-1"></i> Layanan Publik</li>
-                            <li class="mb-2"><i class="bi bi-caret-right-fill me-1"></i> Kontak Kami</li>
-                            <li class="mb-2"><i class="bi bi-caret-right-fill me-1"></i> FAQ</li>
+                            <li class="mb-2"><i class="bi bi-caret-right-fill me-1"></i> <a href="#" class="text-white text-decoration-none">Proposal</a></li>
+                            <li class="mb-2"><i class="bi bi-caret-right-fill me-1"></i> <a href="#" class="text-white text-decoration-none">Layanan Data</a></li>
+                            <li class="mb-2"><i class="bi bi-caret-right-fill me-1"></i> <a href="#" class="text-white text-decoration-none">Buku Tamu</a></li>
+                            <li class="mb-2"><i class="bi bi-caret-right-fill me-1"></i> <a href="#" class="text-white text-decoration-none">Kontak</a></li>
                         </ul>
                     </div>
                 </div>
@@ -50,6 +52,7 @@
                     <li class="mb-1"><i class="bi bi-envelope me-2"></i> Email: distan@padang.go.id</li>
                 </ul>
             </div>
+
         </div>
 
         <hr class="border-light my-3">
