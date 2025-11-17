@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
-class Berita extends Model
+class BeritaImage extends Model
 {
     use HasUuids;
 
     public $incrementing = false;
     protected $keyType = 'string';
 
-    protected $fillable = ['judul', 'slug', 'isi'];
+    protected $fillable = ['berita_id', 'gambar'];
 
-    public function images()
+    public function berita()
     {
-        return $this->hasMany(BeritaImage::class);
+        return $this->belongsTo(Berita::class);
     }
 }

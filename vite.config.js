@@ -8,6 +8,12 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
         }),
-        tailwindcss(),
+        tailwindcss({
+            // ⛔ Abaikan semua vendor (wajib!)
+            scan: {
+                include: ['resources/**/*.{php,js,vue,blade.php}'],
+                exclude: ['vendor/**'], // <--- Ini penyelamat!
+            },
+        }),
     ],
 });

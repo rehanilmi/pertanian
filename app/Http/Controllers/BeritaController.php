@@ -3,56 +3,46 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\Pengumuman;
+use App\Models\PejabatStruktural;
 use Illuminate\Http\Request;
-use Str;
+use Illuminate\Support\Str;
 
 class BeritaController extends Controller
 {
+    // ==========================
+    //  HALAMAN BERANDA
+    // ==========================
+    public function home()
+    {
+        return view('home', [
+            'beritaTerbaru' => Berita::latest()->take(2)->get(),
+            'arsipBerita'   => Berita::latest()->skip(2)->take(5)->get(),
+            'pengumuman' => Pengumuman::latest()->take(5)->get() ?? [],
+            'kepalaDinas' => PejabatStruktural::first() ?? null,
+            'stat' => (object)[
+                'today' => 32,
+                'month' => 1120,
+                'total' => 98231,
+            ]
+        ]);
+    }
+
+    // ==========================
+    //  HALAMAN LIST BERITA
+    // ==========================
     public function index()
     {
         $beritas = Berita::latest()->paginate(6);
         return view('berita.index', compact('beritas'));
     }
 
+    // ==========================
+    //  HALAMAN DETAIL BERITA
+    // ==========================
     public function show($slug)
     {
         $berita = Berita::where('slug', $slug)->firstOrFail();
         return view('berita.show', compact('berita'));
     }
-
-    public function create()
-    {
-        return view('admin.berita.create');
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'judul' => 'required',
-            'isi' => 'required',
-            'gambar' => 'nullable|image|mimes:jpg,png,jpeg'
-        ]);
-
-        $path = $request->file('gambar')?->store('berita', 'public');
-
-        Berita::create([
-            'judul' => $request->judul,
-            'slug' => Str::slug($request->judul),
-            'isi' => $request->isi,
-            'gambar' => $path,
-        ]);
-
-        return redirect()->back()->with('success', 'Berita berhasil disimpan!');
-    }
-
-    public function home()
-    {
-        $beritaUtama = Berita::latest()->first();
-        $arsipBerita = Berita::latest()->skip(1)->take(4)->get();
-        $beritas = Berita::latest()->take(3)->get(); // buat bagian bawah lainnya
-
-        return view('home', compact('beritaUtama', 'arsipBerita', 'beritas'));
-    }
-
 }
-
