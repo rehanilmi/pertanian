@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\SupplierStockController;
 use App\Http\Controllers\Admin\SeedVarietyController;
 use App\Http\Controllers\PerbenihanController;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -99,3 +100,21 @@ Route::get('/get-villages/{district_id}', function($district_id){
 
 Route::get('/perbenihan', [PerbenihanController::class, 'index'])
     ->name('perbenihan.index');
+
+
+
+Route::get('/run-migrate', function () {
+    Artisan::call('migrate', ["--force" => true]);
+    return "✔ Migration completed!";
+});
+
+Route::get('/run-migrate-fresh', function () {
+    Artisan::call('migrate:fresh', ["--force" => true]);
+    return "✔ Fresh migration completed!";
+});
+
+Route::get('/run-seed', function () {
+    Artisan::call('db:seed', ["--force" => true]);
+    return "✔ Database seeded!";
+});
+
