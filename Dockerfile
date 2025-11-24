@@ -1,3 +1,19 @@
+# --- Build Vite Assets ---
+FROM node:18 AS vite-build
+WORKDIR /app
+
+# Copy only package files first (faster cache)
+COPY package*.json ./
+RUN npm install
+
+# Copy the rest of the project files needed for Vite
+COPY resources ./resources
+COPY vite.config.js ./
+
+# Run Vite production build
+RUN npm run build
+
+# --- Main PHP Apache Image ---
 FROM php:8.2-apache
 
 # Install dependencies
@@ -5,7 +21,7 @@ RUN apt-get update && apt-get install -y \
     git unzip libzip-dev libpng-dev libonig-dev \
     && docker-php-ext-install pdo pdo_mysql zip
 
-# Enable mod_rewrite
+# Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
 # Set document root
@@ -13,7 +29,7 @@ ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Copy project
+# Copy Laravel project
 COPY . /var/www/html
 
 WORKDIR /var/www/html
@@ -24,24 +40,15 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && rm composer-setup.php
 
 RUN composer install --no-dev --optimize-autoloader
-# Copy semua file project
-COPY . .
 
-# ============================
-# 3. Install NPM & Build Vite
-# ============================
-RUN apt-get install -y nodejs npm
-
-# Install dependensi front-end & build
-RUN npm install
-RUN npm run build
-
+# Copy Vite build output into public/build
+COPY --from=vite-build /app/public/build /var/www/html/public/build
 
 # Permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Expose default
+# Expose default port for Railway
 EXPOSE 8080
 
-# FIX PORT RAILWAY AUTO
+# Fix Railway PORT auto-binding
 CMD sh -c 'echo "Listen ${PORT:-8080}" > /etc/apache2/ports.conf && apache2-foreground'
