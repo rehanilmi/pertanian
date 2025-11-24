@@ -37,7 +37,14 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && rm composer-setup.php
 
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader \
+RUN php artisan config:clear
+RUN php artisan cache:clear
+RUN php artisan config:cache
+
+RUN php artisan vendor:publish
+RUN php artisan migrate:fresh
+
 
 # Copy compiled Vite build from build stage
 COPY --from=vite-build /app/public/build ./public/build
