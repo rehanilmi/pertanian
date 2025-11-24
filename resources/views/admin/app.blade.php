@@ -171,6 +171,7 @@
 
 {{-- Page-specific JS --}}
 @yield('script')
+@stack('scripts')
 
 </body>
 </html>

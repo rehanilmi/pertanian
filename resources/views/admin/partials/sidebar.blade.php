@@ -51,6 +51,33 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="{{ route('admin.suppliers.index') }}"
+                       class="nav-link {{ request()->is('admin/suppliers*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-seedling"></i>
+                        <p>Supplier</p>
+                    </a>
+                </li>
+
+                {{-- VARIETAS BENIH --}}
+                <li class="nav-item">
+                    <a href="{{ route('admin.varieties.index') }}"
+                       class="nav-link {{ request()->is('admin/varieties*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-leaf"></i>
+                        <p>Varietas Benih</p>
+                    </a>
+                </li>
+
+                {{-- STOK SUPPLIER --}}
+                <li class="nav-item">
+                    <a href="{{ route('admin.supplier_stocks.index') }}"
+                       class="nav-link {{ request()->is('admin/stocks*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-boxes"></i>
+                        <p>Stok Benih</p>
+                    </a>
+                </li>
+
+
                 {{-- LOGOUT --}}
                 <li class="nav-item">
                     <form action="{{ route('logout') }}" method="POST">

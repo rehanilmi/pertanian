@@ -25,6 +25,7 @@ html { scroll-behavior: smooth; }
     </div>
 </div>
 
+
 <!-- === LAYANAN === -->
 <section class="py-5" style="background-color:#1b5e20;">
     <div class="container text-center text-white">
@@ -33,31 +34,34 @@ html { scroll-behavior: smooth; }
 
             @php
             $layanan = [
-            ['icon'=>'🌿','title'=>'Portal PPID'],
-            ['icon'=>'💬','title'=>'Konsultasi Pertanian Online'],
-            ['icon'=>'☎️','title'=>'Kontak Pengaduan'],
-            ['icon'=>'📋','title'=>'Perizinan Pertanian'],
-            ['icon'=>'🌾','title'=>'Perbenihan'],
-            ['icon'=>'👨‍🌾','title'=>'Pengembangan SDM'],
-            ['icon'=>'🧾','title'=>'Data Subsidi Pupuk'],
-            ['icon'=>'🐄','title'=>'Peternakan & Kesehatan Hewan'],
+            ['icon'=>'🌿','title'=>'Portal PPID', 'url'=>'#'],
+            ['icon'=>'💬','title'=>'Konsultasi Pertanian Online', 'url'=>'#'],
+            ['icon'=>'☎️','title'=>'Kontak Pengaduan', 'url'=>'#'],
+            ['icon'=>'📋','title'=>'Perizinan Pertanian', 'url'=>'#'],
+            ['icon'=>'🌾','title'=>'Perbenihan', 'url'=> route('perbenihan.index') ],
+            ['icon'=>'👨‍🌾','title'=>'Pengembangan SDM', 'url'=>'#'],
+            ['icon'=>'🧾','title'=>'Data Subsidi Pupuk', 'url'=>'#'],
+            ['icon'=>'🐄','title'=>'Peternakan & Kesehatan Hewan', 'url'=>'#'],
             ];
             @endphp
 
             @foreach($layanan as $item)
             <div class="col-6 col-md-3 col-lg-2">
-                <div class="card border-0 shadow-sm text-dark h-100">
-                    <div class="card-body text-center">
-                        <div class="fs-2 mb-2">{{ $item['icon'] }}</div>
-                        <p class="fw-semibold small">{{ $item['title'] }}</p>
+                <a href="{{ $item['url'] }}" class="text-decoration-none">
+                    <div class="card border-0 shadow-sm text-dark h-100">
+                        <div class="card-body text-center">
+                            <div class="fs-2 mb-2">{{ $item['icon'] }}</div>
+                            <p class="fw-semibold small">{{ $item['title'] }}</p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             @endforeach
 
         </div>
     </div>
 </section>
+
 
 <!-- === KABAR TERKINI === -->
 <section class="py-5 bg-light">
