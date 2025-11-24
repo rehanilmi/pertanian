@@ -104,17 +104,29 @@ Route::get('/perbenihan', [PerbenihanController::class, 'index'])
 
 
 Route::get('/run-migrate', function () {
-    Artisan::call('migrate', ["--force" => true]);
-    return "✔ Migration completed!";
+    Artisan::call('migrate --force');
+    return "Migrasi selesai";
 });
 
 Route::get('/run-migrate-fresh', function () {
-    Artisan::call('migrate:fresh', ["--force" => true]);
-    return "✔ Fresh migration completed!";
+    Artisan::call('migrate:fresh --force');
+    return "Migrate fresh selesai";
 });
 
 Route::get('/run-seed', function () {
-    Artisan::call('db:seed', ["--force" => true]);
-    return "✔ Database seeded!";
+    Artisan::call('db:seed --force');
+    return "Seeding selesai";
+});
+
+Route::get('/run-cache-fix', function () {
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:cache');
+    return "Cache fixed";
+});
+
+Route::get('/run-storage', function () {
+    Artisan::call('storage:link');
+    return "Storage linked";
 });
 
