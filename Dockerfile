@@ -1,54 +1,36 @@
-# ============================
-# 1. Base image: PHP 8.2 + Apache
-# ============================
 FROM php:8.2-apache
 
-# Install ekstensi PHP yg dibutuhkan Laravel
+# Install dependencies
 RUN apt-get update && apt-get install -y \
-    git unzip curl libzip-dev libpng-dev libonig-dev \
-    && docker-php-ext-install pdo_mysql zip
+    git unzip libzip-dev libpng-dev libonig-dev \
+    && docker-php-ext-install pdo pdo_mysql zip
 
-# Aktifkan mod_rewrite (Wajib untuk Laravel)
+# Enable Apache mod_rewrite (Laravel needs this)
 RUN a2enmod rewrite
 
-# ============================
-# 2. Set folder project
-# ============================
+# Set document root
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+# Copy project files
+COPY . /var/www/html
+
 WORKDIR /var/www/html
 
-# Copy composer terlebih dahulu untuk cache layer
-COPY composer.json composer.lock ./
+# Install Composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
+    && rm composer-setup.php
 
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer
+# Install Laravel dependencies
+RUN composer install --no-dev --optimize-autoloader
 
-# Install dependencies (no dev)
-RUN composer install --no-dev --optimize-autoloader --no-interaction
-
-# Copy semua file project
-COPY . .
-
-# ============================
-# 3. Install NPM & Build Vite
-# ============================
-RUN apt-get install -y nodejs npm
-
-# Install dependensi front-end & build
-RUN npm install
-RUN npm run build
-
-# ============================
-# 4. Permission storage & cache
-# ============================
+# Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# ============================
-# 5. Expose port Railway (8080)
-# ============================
+# Expose port
 EXPOSE 8080
 
-# ============================
-# 6. Apache sebagai web server
-# ============================
+# Use Apache directly (no artisan serve)
 CMD ["apache2-foreground"]
