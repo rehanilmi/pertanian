@@ -2,46 +2,52 @@
 FROM node:18 AS vite-build
 WORKDIR /app
 
+# Copy package files
 COPY package*.json ./
 RUN npm install
 
+# Copy resources and vite config
 COPY resources ./resources
 COPY vite.config.js ./
 
+# Build assets
 RUN npm run build
 
-# --- PHP & Apache ---
+# --- PHP + Apache Server ---
 FROM php:8.2-apache
 
+# Install PHP extensions
 RUN apt-get update && apt-get install -y \
     git unzip libzip-dev libpng-dev libonig-dev \
     && docker-php-ext-install pdo pdo_mysql zip
 
+# Enable Apache Rewrite
 RUN a2enmod rewrite
 
-# ---- FIX DOCUMENT ROOT FULLY ----
+# Fix DocumentRoot to /public
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-RUN sed -i "s|DocumentRoot /var/www/html|DocumentRoot ${APACHE_DOCUMENT_ROOT}|g" /etc/apache2/sites-available/000-default.conf
-RUN sed -i "s|/var/www/html|${APACHE_DOCUMENT_ROOT}|g" /etc/apache2/apache2.conf
+RUN sed -i "s|/var/www/html|/var/www/html/public|g" /etc/apache2/sites-available/000-default.conf
+RUN sed -i "s|/var/www/html|/var/www/html/public|g" /etc/apache2/apache2.conf
 
 WORKDIR /var/www/html
 COPY . .
 
-# Composer install
+# Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && rm composer-setup.php
 
 RUN composer install --no-dev --optimize-autoloader
 
-# Copy Vite build result
+# Copy compiled Vite build from build stage
 COPY --from=vite-build /app/public/build ./public/build
 
+# Permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
 
 EXPOSE 8080
 
-# ---- FIX PORT + VIRTUALHOST (SUPER IMPORTANT) ----
+# Start Apache with Railway PORT
 CMD sh -c ' \
     echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
     echo "Listen ${PORT:-8080}" > /etc/apache2/ports.conf && \
