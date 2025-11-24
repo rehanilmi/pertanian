@@ -24,16 +24,24 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && rm composer-setup.php
 
 RUN composer install --no-dev --optimize-autoloader
+# Copy semua file project
+COPY . .
+
+# ============================
+# 3. Install NPM & Build Vite
+# ============================
+RUN apt-get install -y nodejs npm
+
+# Install dependensi front-end & build
+RUN npm install
+RUN npm run build
+
 
 # Permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# === FIX PORT Railway ===
-# Gunakan PORT yang disediakan Railway (bukan port fix 80)
-RUN echo "Listen ${PORT}" > /etc/apache2/ports.conf
-RUN sed -i "s/<VirtualHost .*>/<VirtualHost *:${PORT}>/g" /etc/apache2/sites-available/000-default.conf
+# Expose default
+EXPOSE 8080
 
-# Expose port environment (Railway membaca PORT)
-EXPOSE ${PORT}
-
-CMD ["apache2-foreground"]
+# FIX PORT RAILWAY AUTO
+CMD sh -c 'echo "Listen ${PORT:-8080}" > /etc/apache2/ports.conf && apache2-foreground'
